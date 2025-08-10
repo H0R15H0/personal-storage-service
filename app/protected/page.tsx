@@ -5,6 +5,7 @@ import {
   ImageIcon,
   VideoIcon,
 } from "lucide-react";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -15,6 +16,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/server";
+import { isPhotoFile } from "@/lib/utils";
 import { UploadFormWrapper } from "./upload-form-wrapper";
 
 export default async function ProtectedPage() {
@@ -25,11 +27,36 @@ export default async function ProtectedPage() {
     redirect("/auth/login");
   }
 
+  // Helper function to get thumbnail URLs
+  const getThumbnailUrl = async (objectId: string) => {
+    const { data, error } = await supabase.storage
+      .from("objects")
+      .createSignedUrl(objectId, 3600); // 1 hour expiry
+    if (error) {
+      console.error("Error generating thumbnail URL:", error);
+      return null;
+    }
+    console.log("Thumbnail URL data:", data);
+    return data?.signedUrl || null;
+  };
+
   // Fetch user's objects
   const { data: objects, error: objectsError } = await supabase
     .from("objects")
     .select("*")
     .order("created_at", { ascending: false });
+
+  // Fetch thumbnail URLs for photo files
+  const objectsWithThumbnails = objects
+    ? await Promise.all(
+        objects.map(async (object) => ({
+          ...object,
+          thumbnailUrl: isPhotoFile(object.mime_type)
+            ? await getThumbnailUrl(object.id)
+            : null,
+        }))
+      )
+    : [];
 
   const formatFileSize = (bytes: number) => {
     if (bytes === 0) return "0 Bytes";
@@ -124,11 +151,12 @@ export default async function ProtectedPage() {
           </Card>
         )}
 
-        {objects && objects.length > 0 && (
+        {objectsWithThumbnails && objectsWithThumbnails.length > 0 && (
           <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {objects.map((object) => {
+            {objectsWithThumbnails.map((object) => {
               const { category, color } = getMimeTypeCategory(object.mime_type);
               const fileIcon = getFileIcon(object.mime_type);
+              const isPhoto = isPhotoFile(object.mime_type);
               return (
                 <Card
                   key={object.id}
@@ -136,8 +164,22 @@ export default async function ProtectedPage() {
                 >
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
-                      <div className="p-2 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10">
-                        {fileIcon}
+                      <div className="relative">
+                        {isPhoto && object.thumbnailUrl ? (
+                          <div className="w-16 h-16 rounded-xl overflow-hidden bg-gradient-to-br from-primary/10 to-accent/10">
+                            <Image
+                              src={object.thumbnailUrl}
+                              alt={`${object.name} thumbnail`}
+                              width={64}
+                              height={64}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        ) : (
+                          <div className="p-2 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10">
+                            {fileIcon}
+                          </div>
+                        )}
                       </div>
                       <Badge className={`${color} border-0 shadow-lg`}>
                         {category}

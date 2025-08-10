@@ -26,11 +26,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Generate object ID first
+    const objectId = randomUUID();
+
     // Create object record in database
-    const { data, error } = await supabase
+    const { data: objectData, error: dbError } = await supabase
       .from("objects")
       .insert({
-        id: randomUUID(),
+        id: objectId,
         user_id: user.id,
         name,
         size_bytes,
@@ -39,15 +42,34 @@ export async function POST(request: NextRequest) {
       .select()
       .single();
 
-    if (error) {
-      console.error("Database error:", error);
+    if (dbError) {
+      console.error("Database error:", dbError);
       return NextResponse.json(
-        { error: "Failed to create object" },
+        { error: "Failed to create object record" },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({ data });
+    // Generate presigned URL for client-side upload
+    const { data: signedUrlData, error: signedUrlError } = await supabase.storage
+      .from("objects")
+      .createSignedUploadUrl(objectId);
+
+    if (signedUrlError) {
+      console.error("Signed URL error:", signedUrlError);
+      // Clean up the database record if presigned URL generation fails
+      await supabase.from("objects").delete().eq("id", objectId);
+      return NextResponse.json(
+        { error: "Failed to generate upload URL" },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({ 
+      data: objectData,
+      upload_url: signedUrlData.signedUrl,
+      upload_token: signedUrlData.token
+    });
   } catch (error) {
     console.error("API error:", error);
     return NextResponse.json(

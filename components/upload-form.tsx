@@ -37,6 +37,7 @@ export function UploadForm({ onUploadSuccess }: UploadFormProps) {
     }
 
     try {
+      // First, get the presigned URL
       const uploadData = {
         name: file.name,
         size_bytes: file.size,
@@ -54,6 +55,22 @@ export function UploadForm({ onUploadSuccess }: UploadFormProps) {
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Failed to create object");
+      }
+
+      const { upload_url, upload_token } = await response.json();
+
+      // Upload file to Supabase storage using presigned URL
+      const uploadResponse = await fetch(upload_url, {
+        method: "PUT",
+        body: file,
+        headers: {
+          "Content-Type": file.type || "application/octet-stream",
+          Authorization: `Bearer ${upload_token}`,
+        },
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error("Failed to upload file to storage");
       }
 
       // Reset form
