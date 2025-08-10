@@ -9,7 +9,10 @@
     "biome:fix": "biome check . --write",
     "biome:format": "biome format . --write",
     "format": "biome format . --write",
-    "lint:biome": "biome lint ."
+    "lint:biome": "biome lint .",
+    "migration:new": "supabase migration new",
+    "migrate": "supabase migration up --local",
+    "generate": "supabase gen types typescript --local --schema public > supabase/types.ts"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.3.1",
