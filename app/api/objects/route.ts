@@ -51,9 +51,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate presigned URL for client-side upload
-    const { data: signedUrlData, error: signedUrlError } = await supabase.storage
-      .from("objects")
-      .createSignedUploadUrl(objectId);
+    const { data: signedUrlData, error: signedUrlError } =
+      await supabase.storage.from("objects").createSignedUploadUrl(objectId);
 
     if (signedUrlError) {
       console.error("Signed URL error:", signedUrlError);
@@ -65,10 +64,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       data: objectData,
       upload_url: signedUrlData.signedUrl,
-      upload_token: signedUrlData.token
+      upload_token: signedUrlData.token,
     });
   } catch (error) {
     console.error("API error:", error);

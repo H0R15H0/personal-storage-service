@@ -11,5 +11,5 @@ export const hasEnvVars =
   process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_OR_ANON_KEY;
 
 export function isPhotoFile(mimeType: string): boolean {
-  return mimeType.startsWith('image/') && !mimeType.includes('svg');
+  return mimeType.startsWith("image/") && !mimeType.includes("svg");
 }

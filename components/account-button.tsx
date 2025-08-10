@@ -37,9 +37,7 @@ export function AccountButton({ userEmail }: AccountButtonProps) {
           size="sm"
           className="relative h-8 w-8 rounded-full bg-muted flex items-center justify-center"
         >
-          <span className="text-xs font-medium">
-            {getInitials(userEmail)}
-          </span>
+          <span className="text-xs font-medium">{getInitials(userEmail)}</span>
           <span className="sr-only">アカウントメニューを開く</span>
         </Button>
       </DropdownMenuTrigger>

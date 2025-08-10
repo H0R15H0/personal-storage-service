@@ -15,7 +15,10 @@ export default function ProtectedLayout({
         <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
           <div className="w-full max-w-5xl flex justify-between items-center px-4 sm:px-5 text-sm h-full">
             <div className="flex items-center font-semibold h-full">
-              <Link href={"/"} className="text-sm sm:text-base hover:opacity-80 transition-opacity flex items-center">
+              <Link
+                href={"/"}
+                className="text-sm sm:text-base hover:opacity-80 transition-opacity flex items-center"
+              >
                 保存サービス
               </Link>
             </div>
