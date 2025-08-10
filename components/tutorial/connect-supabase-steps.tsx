@@ -5,7 +5,8 @@ export function ConnectSupabaseSteps() {
     <ol className="flex flex-col gap-6">
       <TutorialStep title="Supabaseプロジェクトを作成">
         <p>
-          {" "}にアクセスして{" "}
+          {" "}
+          にアクセスして{" "}
           <a
             href="https://app.supabase.com/project/_/settings/api"
             target="_blank"

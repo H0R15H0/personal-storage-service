@@ -14,7 +14,7 @@ export default async function Page({
           <Card>
             <CardHeader>
               <CardTitle className="text-2xl">
-申し訳ありません、エラーが発生しました。
+                申し訳ありません、エラーが発生しました。
               </CardTitle>
             </CardHeader>
             <CardContent>
