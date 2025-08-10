@@ -1,7 +1,7 @@
 "use client";
 
 import { LoaderIcon, UploadIcon } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,6 +20,7 @@ interface UploadFormProps {
 export function UploadForm({ onUploadSuccess }: UploadFormProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -56,7 +57,7 @@ export function UploadForm({ onUploadSuccess }: UploadFormProps) {
       }
 
       // Reset form
-      e.currentTarget.reset();
+      formRef.current?.reset();
       onUploadSuccess();
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -77,7 +78,7 @@ export function UploadForm({ onUploadSuccess }: UploadFormProps) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="file">ファイル</Label>
             <Input
