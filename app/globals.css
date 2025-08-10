@@ -68,6 +68,8 @@
       radial-gradient(circle at 20% 80%, hsla(315, 100%, 90%, 0.08) 0%, transparent 50%),
       radial-gradient(circle at 80% 20%, hsla(200, 100%, 90%, 0.08) 0%, transparent 50%),
       radial-gradient(circle at 40% 40%, hsla(280, 100%, 90%, 0.05) 0%, transparent 50%);
+    /* Improve mobile scrolling */
+    -webkit-overflow-scrolling: touch;
   }
   .dark body {
     background-image: 
@@ -98,5 +100,28 @@
   .dark .glass-effect {
     background-color: hsla(0, 0%, 0%, 0.2);
     border: 1px solid hsla(0, 0%, 100%, 0.1);
+  }
+  
+  /* Mobile-specific improvements */
+  @media (max-width: 640px) {
+    .glass-effect {
+      backdrop-filter: blur(8px);
+    }
+    
+    /* Reduce hover effects on touch devices */
+    .hover\:scale-105:hover {
+      transform: scale(1.02);
+    }
+  }
+  
+  /* Ensure proper touch targets on mobile */
+  @media (max-width: 640px) {
+    button, 
+    a, 
+    input, 
+    select, 
+    textarea {
+      min-height: 44px;
+    }
   }
 }

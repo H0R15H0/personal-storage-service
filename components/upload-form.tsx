@@ -68,36 +68,42 @@ export function UploadForm({ onUploadSuccess }: UploadFormProps) {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <UploadIcon size="20" />
+      <CardHeader className="px-4 sm:px-6">
+        <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+          <UploadIcon size="18" className="sm:w-5 sm:h-5" />
           ファイルアップロード
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-sm sm:text-base">
           写真や動画を選択してアップロードしてください
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 sm:px-6">
         <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="file">ファイル</Label>
+            <Label htmlFor="file" className="text-sm sm:text-base">
+              ファイル
+            </Label>
             <Input
               id="file"
               name="file"
               type="file"
               accept="image/*,video/*,.gif,.webp,.apng"
               disabled={isUploading}
-              className="cursor-pointer"
+              className="cursor-pointer h-11 sm:h-12 text-sm sm:text-base"
             />
           </div>
 
           {error && (
-            <div className="text-red-600 text-sm p-2 bg-red-50 rounded-md">
+            <div className="text-red-600 text-xs sm:text-sm p-2 bg-red-50 rounded-md">
               {error}
             </div>
           )}
 
-          <Button type="submit" disabled={isUploading} className="w-full">
+          <Button
+            type="submit"
+            disabled={isUploading}
+            className="w-full h-11 sm:h-12 text-sm sm:text-base"
+          >
             {isUploading ? (
               <>
                 <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />

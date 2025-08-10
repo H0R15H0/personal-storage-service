@@ -48,19 +48,24 @@ export function LoginForm({
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div
+      className={cn("flex flex-col gap-6 w-full max-w-md mx-auto", className)}
+      {...props}
+    >
       <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl">ログイン</CardTitle>
-          <CardDescription>
+        <CardHeader className="px-4 sm:px-6">
+          <CardTitle className="text-xl sm:text-2xl">ログイン</CardTitle>
+          <CardDescription className="text-sm sm:text-base">
             アカウントにログインするためのメールアドレスを入力してください
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-4 sm:px-6">
           <form onSubmit={handleLogin}>
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4 sm:gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="email">メールアドレス</Label>
+                <Label htmlFor="email" className="text-sm sm:text-base">
+                  メールアドレス
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -68,14 +73,17 @@ export function LoginForm({
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  className="h-11 sm:h-12 text-sm sm:text-base"
                 />
               </div>
               <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">パスワード</Label>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-0">
+                  <Label htmlFor="password" className="text-sm sm:text-base">
+                    パスワード
+                  </Label>
                   <Link
                     href="/auth/forgot-password"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                    className="sm:ml-auto text-xs sm:text-sm underline-offset-4 hover:underline"
                   >
                     パスワードを忘れましたか？
                   </Link>
@@ -86,14 +94,23 @@ export function LoginForm({
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="h-11 sm:h-12 text-sm sm:text-base"
                 />
               </div>
-              {error && <p className="text-sm text-red-500">{error}</p>}
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              {error && (
+                <p className="text-xs sm:text-sm text-red-500 p-2 bg-red-50 rounded-md">
+                  {error}
+                </p>
+              )}
+              <Button
+                type="submit"
+                className="w-full h-11 sm:h-12 text-sm sm:text-base"
+                disabled={isLoading}
+              >
                 {isLoading ? "ログイン中..." : "ログイン"}
               </Button>
             </div>
-            <div className="mt-4 text-center text-sm">
+            <div className="mt-4 text-center text-xs sm:text-sm">
               アカウントをお持ちでないですか？{" "}
               <Link
                 href="/auth/sign-up"

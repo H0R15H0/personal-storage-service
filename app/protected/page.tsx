@@ -92,12 +92,12 @@ export default async function ProtectedPage() {
   return (
     <div className="flex-1 w-full flex flex-col gap-8">
       <div className="flex flex-col gap-6">
-        <div className="flex items-center justify-between">
-          <h2 className="font-bold text-4xl gradient-text animate-float">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
+          <h2 className="font-bold text-2xl sm:text-3xl md:text-4xl gradient-text animate-float">
             マイストレージ ✨
           </h2>
-          <Badge className="flex items-center gap-2 bg-gradient-kpop text-white px-4 py-2 text-sm font-semibold">
-            <HardDriveIcon size="16" />
+          <Badge className="flex items-center gap-2 bg-gradient-kpop text-white px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold self-start sm:self-auto">
+            <HardDriveIcon size="14" className="sm:w-4 sm:h-4" />
             {objects?.length || 0} ファイル
           </Badge>
         </div>
@@ -125,7 +125,7 @@ export default async function ProtectedPage() {
         )}
 
         {objects && objects.length > 0 && (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {objects.map((object) => {
               const { category, color } = getMimeTypeCategory(object.mime_type);
               const fileIcon = getFileIcon(object.mime_type);
