@@ -14,14 +14,13 @@ export default function Page() {
           <Card>
             <CardHeader>
               <CardTitle className="text-2xl">
-                Thank you for signing up!
+                サインアップありがとうございます！
               </CardTitle>
-              <CardDescription>Check your email to confirm</CardDescription>
+              <CardDescription>メールで確認してください</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                You&apos;ve successfully signed up. Please check your email to
-                confirm your account before signing in.
+                サインアップが正常に完了しました。ログインする前に、メールでアカウントを確認してください。
               </p>
             </CardContent>
           </Card>

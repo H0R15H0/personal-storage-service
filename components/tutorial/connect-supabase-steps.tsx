@@ -3,9 +3,9 @@ import { TutorialStep } from "./tutorial-step";
 export function ConnectSupabaseSteps() {
   return (
     <ol className="flex flex-col gap-6">
-      <TutorialStep title="Create Supabase project">
+      <TutorialStep title="Supabaseプロジェクトを作成">
         <p>
-          Head over to{" "}
+          {" "}にアクセスして{" "}
           <a
             href="https://app.supabase.com/project/_/settings/api"
             target="_blank"
@@ -14,7 +14,7 @@ export function ConnectSupabaseSteps() {
           >
             database.new
           </a>{" "}
-          and create a new Supabase project.
+          新しいSupabaseプロジェクトを作成してください。
         </p>
       </TutorialStep>
 
