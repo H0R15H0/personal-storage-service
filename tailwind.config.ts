@@ -51,11 +51,44 @@ export default {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+        kpop: {
+          pink: "hsl(315, 100%, 65%)",
+          purple: "hsl(280, 100%, 70%)",
+          blue: "hsl(200, 100%, 70%)",
+          yellow: "hsl(45, 100%, 70%)",
+          green: "hsl(120, 60%, 60%)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      animation: {
+        "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "bounce-slow": "bounce 2s infinite",
+        "gradient-x": "gradient-x 15s ease infinite",
+        "float": "float 6s ease-in-out infinite",
+      },
+      keyframes: {
+        "gradient-x": {
+          "0%, 100%": {
+            "background-size": "200% 200%",
+            "background-position": "left center",
+          },
+          "50%": {
+            "background-size": "200% 200%",
+            "background-position": "right center",
+          },
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-20px)" },
+        },
+      },
+      backgroundImage: {
+        "gradient-kpop": "linear-gradient(135deg, hsl(315, 100%, 65%) 0%, hsl(280, 100%, 70%) 50%, hsl(200, 100%, 70%) 100%)",
+        "gradient-kpop-hover": "linear-gradient(135deg, hsl(315, 100%, 60%) 0%, hsl(280, 100%, 65%) 50%, hsl(200, 100%, 65%) 100%)",
       },
     },
   },

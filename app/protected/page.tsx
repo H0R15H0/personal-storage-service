@@ -38,27 +38,27 @@ export default async function ProtectedPage() {
   };
 
   const getMimeTypeCategory = (mimeType: string) => {
-    if (mimeType.startsWith("image/")) return { category: "Image", color: "bg-blue-100 text-blue-800" };
-    if (mimeType.startsWith("video/")) return { category: "Video", color: "bg-purple-100 text-purple-800" };
-    if (mimeType.startsWith("audio/")) return { category: "Audio", color: "bg-green-100 text-green-800" };
-    if (mimeType.includes("pdf")) return { category: "PDF", color: "bg-red-100 text-red-800" };
-    if (mimeType.includes("text/")) return { category: "Text", color: "bg-gray-100 text-gray-800" };
-    return { category: "File", color: "bg-orange-100 text-orange-800" };
+    if (mimeType.startsWith("image/")) return { category: "画像", color: "bg-gradient-to-r from-kpop-pink to-kpop-purple text-white" };
+    if (mimeType.startsWith("video/")) return { category: "動画", color: "bg-gradient-to-r from-kpop-purple to-kpop-blue text-white" };
+    if (mimeType.startsWith("audio/")) return { category: "音声", color: "bg-gradient-to-r from-kpop-blue to-kpop-green text-white" };
+    if (mimeType.includes("pdf")) return { category: "PDF", color: "bg-gradient-to-r from-kpop-green to-kpop-yellow text-white" };
+    if (mimeType.includes("text/")) return { category: "テキスト", color: "bg-gradient-to-r from-kpop-yellow to-kpop-pink text-white" };
+    return { category: "ファイル", color: "bg-gradient-to-r from-primary to-accent text-white" };
   };
 
   const getFileIcon = (mimeType: string) => {
-    if (mimeType.startsWith("image/")) return <ImageIcon className="w-8 h-8 text-blue-600" />;
-    if (mimeType.startsWith("video/")) return <VideoIcon className="w-8 h-8 text-purple-600" />;
-    return <FileIcon className="w-8 h-8 text-muted-foreground" />;
+    if (mimeType.startsWith("image/")) return <ImageIcon className="w-8 h-8 text-kpop-pink" />;
+    if (mimeType.startsWith("video/")) return <VideoIcon className="w-8 h-8 text-kpop-purple" />;
+    return <FileIcon className="w-8 h-8 text-kpop-blue" />;
   };
 
   return (
     <div className="flex-1 w-full flex flex-col gap-8">
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
-          <h2 className="font-bold text-3xl">マイストレージ</h2>
-          <Badge variant="secondary" className="flex items-center gap-2">
-            <HardDriveIcon size="14" />
+          <h2 className="font-bold text-4xl gradient-text animate-float">マイストレージ ✨</h2>
+          <Badge className="flex items-center gap-2 bg-gradient-kpop text-white px-4 py-2 text-sm font-semibold">
+            <HardDriveIcon size="16" />
             {objects?.length || 0} ファイル
           </Badge>
         </div>
@@ -84,16 +84,18 @@ export default async function ProtectedPage() {
         )}
 
         {objects && objects.length > 0 && (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {objects.map((object) => {
               const { category, color } = getMimeTypeCategory(object.mime_type);
               const fileIcon = getFileIcon(object.mime_type);
               return (
-                <Card key={object.id} className="hover:shadow-md transition-shadow">
+                <Card key={object.id} className="glass-effect hover:scale-105 hover:shadow-xl transition-all duration-300 border-0">
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
-                      {fileIcon}
-                      <Badge variant="secondary" className={color}>
+                      <div className="p-2 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10">
+                        {fileIcon}
+                      </div>
+                      <Badge className={`${color} border-0 shadow-lg`}>
                         {category}
                       </Badge>
                     </div>
