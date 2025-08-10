@@ -1,11 +1,17 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { LoaderIcon, UploadIcon } from "lucide-react";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface UploadFormProps {
   onUploadSuccess: () => void;
@@ -78,7 +84,7 @@ export function UploadForm({ onUploadSuccess }: UploadFormProps) {
               id="file"
               name="file"
               type="file"
-              accept="image/*,video/*"
+              accept="image/*,video/*,.gif,.webp,.apng"
               disabled={isUploading}
               className="cursor-pointer"
             />

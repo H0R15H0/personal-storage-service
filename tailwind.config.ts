@@ -68,7 +68,7 @@ export default {
         "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         "bounce-slow": "bounce 2s infinite",
         "gradient-x": "gradient-x 15s ease infinite",
-        "float": "float 6s ease-in-out infinite",
+        float: "float 6s ease-in-out infinite",
       },
       keyframes: {
         "gradient-x": {
@@ -81,14 +81,16 @@ export default {
             "background-position": "right center",
           },
         },
-        "float": {
+        float: {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-20px)" },
         },
       },
       backgroundImage: {
-        "gradient-kpop": "linear-gradient(135deg, hsl(315, 100%, 65%) 0%, hsl(280, 100%, 70%) 50%, hsl(200, 100%, 70%) 100%)",
-        "gradient-kpop-hover": "linear-gradient(135deg, hsl(315, 100%, 60%) 0%, hsl(280, 100%, 65%) 50%, hsl(200, 100%, 65%) 100%)",
+        "gradient-kpop":
+          "linear-gradient(135deg, hsl(315, 100%, 65%) 0%, hsl(280, 100%, 70%) 50%, hsl(200, 100%, 70%) 100%)",
+        "gradient-kpop-hover":
+          "linear-gradient(135deg, hsl(315, 100%, 60%) 0%, hsl(280, 100%, 65%) 50%, hsl(200, 100%, 65%) 100%)",
       },
     },
   },

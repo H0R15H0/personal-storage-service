@@ -1,9 +1,9 @@
+import { CloudIcon, ImageIcon, ShieldCheckIcon, VideoIcon } from "lucide-react";
+import Link from "next/link";
 import { AuthButton } from "@/components/auth-button";
 import { EnvVarWarning } from "@/components/env-var-warning";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { hasEnvVars } from "@/lib/utils";
-import Link from "next/link";
-import { CloudIcon, ImageIcon, VideoIcon, ShieldCheckIcon } from "lucide-react";
 
 export default function Home() {
   return (
@@ -20,17 +20,18 @@ export default function Home() {
             {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}
           </div>
         </nav>
-        
+
         <div className="flex-1 flex flex-col gap-20 max-w-5xl p-5">
           <div className="text-center space-y-8">
             <h1 className="text-5xl md:text-6xl font-bold tracking-tight animate-float">
-              <span className="gradient-text">写真・動画を</span><br />
+              <span className="gradient-text">写真・動画を</span>
+              <br />
               <span className="text-foreground">安全に保存</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               大切な思い出を美しく保存し、いつでもどこからでもアクセス✨
             </p>
-            
+
             <div className="grid md:grid-cols-3 gap-8 mt-16">
               <div className="text-center space-y-6 p-6 rounded-2xl glass-effect hover:scale-105 transition-all duration-300 group">
                 <div className="w-20 h-20 bg-gradient-to-br from-kpop-pink to-kpop-purple rounded-2xl flex items-center justify-center mx-auto animate-pulse-slow group-hover:animate-bounce-slow">
@@ -41,7 +42,7 @@ export default function Home() {
                   高画質の写真を無制限にアップロードして安全に保存💖
                 </p>
               </div>
-              
+
               <div className="text-center space-y-6 p-6 rounded-2xl glass-effect hover:scale-105 transition-all duration-300 group">
                 <div className="w-20 h-20 bg-gradient-to-br from-kpop-purple to-kpop-blue rounded-2xl flex items-center justify-center mx-auto animate-pulse-slow group-hover:animate-bounce-slow">
                   <VideoIcon className="w-10 h-10 text-white" />
@@ -51,7 +52,7 @@ export default function Home() {
                   大容量の動画ファイルも高速でアップロード可能🎬
                 </p>
               </div>
-              
+
               <div className="text-center space-y-6 p-6 rounded-2xl glass-effect hover:scale-105 transition-all duration-300 group">
                 <div className="w-20 h-20 bg-gradient-to-br from-kpop-blue to-kpop-green rounded-2xl flex items-center justify-center mx-auto animate-pulse-slow group-hover:animate-bounce-slow">
                   <ShieldCheckIcon className="w-10 h-10 text-white" />
@@ -62,11 +63,11 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            
+
             {hasEnvVars && (
               <div className="mt-16">
-                <Link 
-                  href="/auth/sign-up" 
+                <Link
+                  href="/auth/sign-up"
                   className="inline-flex items-center px-8 py-4 text-xl font-bold text-white bg-gradient-kpop hover:bg-gradient-kpop-hover rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-gradient-x"
                 >
                   今すぐ始める 🚀
