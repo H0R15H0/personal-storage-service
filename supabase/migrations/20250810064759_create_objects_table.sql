@@ -12,3 +12,8 @@ alter table objects enable row level security;
 create policy "User can see their own objects only."
 on objects
 for select using ( (select auth.uid()) = user_id );
+
+create policy "Users can create a object."
+on objects for insert
+to authenticated
+with check ( (select auth.uid()) = user_id );
