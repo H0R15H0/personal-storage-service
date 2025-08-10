@@ -1,9 +1,8 @@
-import { InfoIcon, FileIcon, CalendarIcon, HardDriveIcon } from "lucide-react";
-import { redirect } from "next/navigation";
-import { FetchDataSteps } from "@/components/tutorial/fetch-data-steps";
-import { createClient } from "@/lib/supabase/server";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { createClient } from "@/lib/supabase/server";
+import { CalendarIcon, FileIcon, HardDriveIcon, ImageIcon, VideoIcon } from "lucide-react";
+import { redirect } from "next/navigation";
 import { UploadFormWrapper } from "./upload-form-wrapper";
 
 export default async function ProtectedPage() {
@@ -25,7 +24,7 @@ export default async function ProtectedPage() {
     const k = 1024;
     const sizes = ["Bytes", "KB", "MB", "GB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+    return `${parseFloat((bytes / k ** i).toFixed(2))} ${sizes[i]}`;
   };
 
   const formatDate = (dateString: string) => {
@@ -47,21 +46,20 @@ export default async function ProtectedPage() {
     return { category: "File", color: "bg-orange-100 text-orange-800" };
   };
 
+  const getFileIcon = (mimeType: string) => {
+    if (mimeType.startsWith("image/")) return <ImageIcon className="w-8 h-8 text-blue-600" />;
+    if (mimeType.startsWith("video/")) return <VideoIcon className="w-8 h-8 text-purple-600" />;
+    return <FileIcon className="w-8 h-8 text-muted-foreground" />;
+  };
+
   return (
     <div className="flex-1 w-full flex flex-col gap-8">
-      <div className="w-full">
-        <div className="bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center">
-          <InfoIcon size="16" strokeWidth={2} />
-          This is a protected page that you can only see as an authenticated user
-        </div>
-      </div>
-
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
-          <h2 className="font-bold text-3xl">Your Objects</h2>
+          <h2 className="font-bold text-3xl">マイストレージ</h2>
           <Badge variant="secondary" className="flex items-center gap-2">
             <HardDriveIcon size="14" />
-            {objects?.length || 0} objects
+            {objects?.length || 0} ファイル
           </Badge>
         </div>
 
@@ -76,10 +74,10 @@ export default async function ProtectedPage() {
         {objects && objects.length === 0 && (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
-              <FileIcon className="w-12 h-12 text-muted-foreground mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No objects found</h3>
+              <ImageIcon className="w-12 h-12 text-muted-foreground mb-4" />
+              <h3 className="text-lg font-semibold mb-2">ファイルがありません</h3>
               <p className="text-muted-foreground text-center">
-                You haven&apos;t uploaded any objects yet. Start by uploading your first file.
+                まだファイルをアップロードしていません。最初の写真や動画をアップロードしてみましょう。
               </p>
             </CardContent>
           </Card>
@@ -89,11 +87,12 @@ export default async function ProtectedPage() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {objects.map((object) => {
               const { category, color } = getMimeTypeCategory(object.mime_type);
+              const fileIcon = getFileIcon(object.mime_type);
               return (
                 <Card key={object.id} className="hover:shadow-md transition-shadow">
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
-                      <FileIcon className="w-8 h-8 text-muted-foreground" />
+                      {fileIcon}
                       <Badge variant="secondary" className={color}>
                         {category}
                       </Badge>
@@ -128,18 +127,6 @@ export default async function ProtectedPage() {
             })}
           </div>
         )}
-      </div>
-
-      <div className="flex flex-col gap-2 items-start">
-        <h2 className="font-bold text-2xl mb-4">Your user details</h2>
-        <pre className="text-xs font-mono p-3 rounded border max-h-32 overflow-auto">
-          {JSON.stringify(data.claims, null, 2)}
-        </pre>
-      </div>
-
-      <div>
-        <h2 className="font-bold text-2xl mb-4">Next steps</h2>
-        <FetchDataSteps />
       </div>
     </div>
   );

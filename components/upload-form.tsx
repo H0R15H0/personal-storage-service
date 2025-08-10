@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { UploadIcon, LoaderIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { LoaderIcon, UploadIcon } from "lucide-react";
+import { useState } from "react";
 
 interface UploadFormProps {
   onUploadSuccess: () => void;
@@ -24,7 +24,7 @@ export function UploadForm({ onUploadSuccess }: UploadFormProps) {
     const file = formData.get("file") as File;
 
     if (!file || file.size === 0) {
-      setError("Please select a file");
+      setError("ファイルを選択してください");
       setIsUploading(false);
       return;
     }
@@ -64,20 +64,21 @@ export function UploadForm({ onUploadSuccess }: UploadFormProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <UploadIcon size="20" />
-          Upload File
+          ファイルアップロード
         </CardTitle>
         <CardDescription>
-          Select a file to create an object record (file content won&apos;t be stored)
+          写真や動画を選択してアップロードしてください
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="file">File</Label>
+            <Label htmlFor="file">ファイル</Label>
             <Input
               id="file"
               name="file"
               type="file"
+              accept="image/*,video/*"
               disabled={isUploading}
               className="cursor-pointer"
             />
@@ -93,12 +94,12 @@ export function UploadForm({ onUploadSuccess }: UploadFormProps) {
             {isUploading ? (
               <>
                 <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />
-                Creating object...
+                アップロード中...
               </>
             ) : (
               <>
                 <UploadIcon className="w-4 h-4 mr-2" />
-                Create Object
+                アップロード
               </>
             )}
           </Button>
